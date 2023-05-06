@@ -43,7 +43,7 @@ public class PostService {
         int millis = now.get(ChronoField.MILLI_OF_SECOND);
 
         // 파일이 저장될 절대 경로
-        String absolutePath = new File("/Users/gram/Desktop").getAbsolutePath() + "/";
+        String absolutePath = new File("/Users/User/Desktop").getAbsolutePath() + "/";
         // 새로 부여한 이미지명
         String newFileName = "image" + hour + minute + second + millis;
         // 정규식 이용하여 확장자만 추출
