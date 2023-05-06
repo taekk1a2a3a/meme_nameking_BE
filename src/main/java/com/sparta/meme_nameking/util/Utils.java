@@ -32,6 +32,11 @@ public class Utils {
         return commentRepository.findById(id).orElseThrow(
                 () -> new CustomException(ErrorCode.COMMENT_NOT_FOUND));
     }
+    public void isUserComment(User user, Comment comment){
+        if(!comment.getUser().getId().equals(user.getId())){
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+    }
 
     // 따봉킹 찾기
     public User getDdabongKing(){
