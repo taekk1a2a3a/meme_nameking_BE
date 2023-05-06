@@ -7,8 +7,6 @@ import com.sparta.meme_nameking.entity.Comment;
 import com.sparta.meme_nameking.entity.Post;
 import com.sparta.meme_nameking.entity.User;
 import com.sparta.meme_nameking.entity.UserRoleEnum;
-import com.sparta.meme_nameking.exception.CustomException;
-import com.sparta.meme_nameking.exception.ErrorCode;
 import com.sparta.meme_nameking.repository.CommentRepository;
 import com.sparta.meme_nameking.util.Utils;
 import lombok.RequiredArgsConstructor;

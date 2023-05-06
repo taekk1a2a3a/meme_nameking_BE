@@ -38,6 +38,12 @@ public class Utils {
         }
     }
 
+    // 작성자 찾기
+    public Post findAuthorById(Long id, Long userId){
+        return postRepository.findByIdAndUser_id(id, userId).orElseThrow(
+                () -> new CustomException(ErrorCode.AUTHOR_NOT_SAME_MOD));
+    }
+
     // 따봉킹 찾기
     public User getDdabongKing(){
         User DdabongKing = commentRepository.findAll()
