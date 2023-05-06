@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class Comment {
+public class Comment extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,15 +22,17 @@ public class Comment {
     // 다대일 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
+    @JsonBackReference
     private Post post;
 
-//    @JsonBackReference
-//    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
-//    private CommentDdabong commentDdabong;
+    @JsonBackReference
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
+    private List<CommentDdabong> commentDdabongList = new ArrayList<>();
 
 
     public Comment(CommentRequestDto commentRequestDto, User user, Post post) {

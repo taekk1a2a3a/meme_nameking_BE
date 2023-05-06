@@ -1,6 +1,7 @@
 package com.sparta.meme_nameking.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ErrorResponse {
+
     private final int status; //http 상태 코드
     private final String message; //에러 메시지
 
