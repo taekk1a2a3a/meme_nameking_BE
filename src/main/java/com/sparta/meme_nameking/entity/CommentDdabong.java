@@ -1,6 +1,7 @@
 package com.sparta.meme_nameking.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,11 +10,12 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-@Table(name = "postddabong")
-public class PostDdabong {
+@Table(name = "commentddabong")
+public class CommentDdabong {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "postddabong")
+    @Column(name = "commentddabong_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,17 +24,7 @@ public class PostDdabong {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    @JsonBackReference
-    private Post post;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
+    @JsonBackReference
     private Comment comment;
-
-    public PostDdabong(User user, Post post, Comment comment) {
-        this.user = user;
-        this.post = post;
-        this.comment = comment;
-    }
 }
