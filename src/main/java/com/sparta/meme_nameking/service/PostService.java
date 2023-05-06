@@ -1,31 +1,30 @@
 package com.sparta.meme_nameking.service;
 
-import com.sparta.meme_nameking.dto.PostRequestDto;
 import com.sparta.meme_nameking.dto.PostResponseDto;
 import com.sparta.meme_nameking.dto.ResponseMsgDto;
-import com.sparta.meme_nameking.entity.*;
-import com.sparta.meme_nameking.exception.CustomException;
+import com.sparta.meme_nameking.entity.Post;
+import com.sparta.meme_nameking.entity.User;
 import com.sparta.meme_nameking.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
-
-import static com.sparta.meme_nameking.exception.ErrorCode.AUTHOR_NOT_SAME_MOD;
-import static com.sparta.meme_nameking.exception.ErrorCode.POST_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
+
+    @Value("${file.upload.location}")
+    private String upLoadLocation;
 
     Post post;
 
@@ -43,7 +42,7 @@ public class PostService {
         int millis = now.get(ChronoField.MILLI_OF_SECOND);
 
         // 파일이 저장될 절대 경로
-        String absolutePath = new File("/Users/gram/Desktop").getAbsolutePath() + "/";
+        String absolutePath = new File(upLoadLocation).getAbsolutePath() + "/";
         // 새로 부여한 이미지명
         String newFileName = "image" + hour + minute + second + millis;
         // 정규식 이용하여 확장자만 추출
