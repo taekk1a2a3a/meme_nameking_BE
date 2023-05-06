@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,13 +34,13 @@ public class Post extends Timestamped {
     @JsonBackReference
     private User user;
 
-//    @JsonBackReference
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-//    private List<Comment> commentList = new ArrayList<>();
-//
-//    @JsonBackReference
-//    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-//    private List<PostDdabong> postDdabongList = new ArrayList<>();
+    @JsonBackReference
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList = new ArrayList<>();
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    private List<PostDdabong> postDdabongList = new ArrayList<>();
 
     @Builder
     public Post(String originImageName, String imagePath, String imageName, User user) {
@@ -50,11 +52,11 @@ public class Post extends Timestamped {
 
     private int Ddabong;
 
-//    public void update(PostRequestDto postRequestDto) {
-//        this.originImageName = postRequestDto.getOriginImageName();
-//        this.imageName = postRequestDto.getImageName();
-//        this.imagePath = postRequestDto.getImagePath();
-//    }
+    public void update(String getOriginImageName, String getImagePath, String getImageName) {
+        this.originImageName = getOriginImageName;
+        this.imageName = getImageName;
+        this.imagePath = getImagePath;
+    }
 
     public void incDdabong() { ++Ddabong; }
     public void decDdabong() { --Ddabong; }
