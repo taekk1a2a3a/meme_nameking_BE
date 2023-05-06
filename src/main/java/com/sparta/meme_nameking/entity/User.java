@@ -30,6 +30,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String nickname;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private UserRoleEnum role;
+
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 //    @JsonManagedReference
 //    private List<Post> postList = new ArrayList<>();
@@ -50,5 +54,6 @@ public class User {
         this.nickname = nickname;
         this.username = username;
         this.password = password;
+        this.role = UserRoleEnum.USER;
     }
 }
