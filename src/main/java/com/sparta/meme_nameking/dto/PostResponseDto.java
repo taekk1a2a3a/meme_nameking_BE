@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PostResponseDto {
     private Long id;
-    private String img;
+    private String imageName;
     private LocalDateTime createAt;
 
     public PostResponseDto(Post post) {
         this.id = post.getId();
-        this.img = post.getImg();
+        this.imageName = post.getImageName();
         this.createAt = post.getCreatedAt();
     }
 
