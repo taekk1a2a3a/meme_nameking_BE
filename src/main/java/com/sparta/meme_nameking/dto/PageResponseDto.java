@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-public class PagesResponseDto {
+public class PageResponseDto {
 
     @Getter
     @NoArgsConstructor
