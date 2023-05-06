@@ -14,6 +14,7 @@ import java.util.*;
 public class Comment extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
     private Long id;
 
     @Column(nullable = false)
@@ -34,10 +35,15 @@ public class Comment extends Timestamped{
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     private List<CommentDdabong> commentDdabongList = new ArrayList<>();
 
+    private int Ddabong;
+
 
     public Comment(CommentRequestDto commentRequestDto, User user, Post post) {
-//        this.content = commentRequestDto.getContent;
+        this.content = commentRequestDto.getContent();
         this.user = user;
         this.post = post;
     }
+
+    public void incDdabong() { ++Ddabong; }
+    public void decDdabong() { --Ddabong; }
 }

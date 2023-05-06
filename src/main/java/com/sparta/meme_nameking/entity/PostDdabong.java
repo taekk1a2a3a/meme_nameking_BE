@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class PostDdabong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "postddabong")
+    @Column(name = "postddabong_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,13 +26,8 @@ public class PostDdabong {
     @JsonBackReference
     private Post post;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
-
-    public PostDdabong(User user, Post post, Comment comment) {
+    public PostDdabong(User user, Post post) {
         this.user = user;
         this.post = post;
-        this.comment = comment;
     }
 }
