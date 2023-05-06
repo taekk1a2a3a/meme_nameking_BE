@@ -18,6 +18,8 @@ public class PageResponseDto {
     @NoArgsConstructor
     public static class detail {
 
+
+
     }
 
     @Getter
