@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice
+@Slf4j
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 
@@ -22,4 +23,23 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(httpStatus)
                 .body(new ErrorResponse(httpStatus.value(), errorCode.getDetail()));
     }
+
+//    // CustomException 클래스에서 예외 핸들러
+//    @ExceptionHandler(CustomException.class)
+//    public ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
+//        return ErrorResponse.toResponseEntity(e.getErrorCode());
+//    }
+//
+//    // Valid 예외 핸들러 (아이디 패스워드 유효성 검사)
+//    @ExceptionHandler({BindException.class})
+//    public ResponseEntity<ErrorResponse> handleBindException(BindException e) {
+//        BindingResult bindingResult = e.getBindingResult();
+//
+//        StringBuilder sb = new StringBuilder();
+//        for ( FieldError fieldError : bindingResult.getFieldErrors()) {
+//            sb.append(fieldError.getDefaultMessage());
+//            sb.append(", ");
+//        }
+//        return ErrorResponse.toResponseEntityValid(sb.toString(), HttpStatus.BAD_REQUEST);
+//    }
 }

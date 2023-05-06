@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.sparta.meme_nameking.exception.ErrorCode.EXIST_NICKNAME;
+import static com.sparta.meme_nameking.exception.ErrorCode.EXIST_USERNAME;
+
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +46,7 @@ public class UserService {
             throw new CustomException(EXIST_USERNAME);
         }
 
-        User user = new User(nickname,username, password);
+        User user = new User(nickname, username, password);
         userRepository.save(user);
         return ResponseMsgDto.setSuccess(StatusEnum.OK.getStatus(), "회원가입 완료", null);
     }
