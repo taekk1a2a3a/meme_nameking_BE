@@ -1,6 +1,7 @@
 package com.sparta.meme_nameking.exception;
 
-import lombok.AllArgsConstructor;
+
+import lombok.Builder;
 import lombok.Builder;
 import lombok.Getter;
 //import org.springframework.http.HttpStatus;

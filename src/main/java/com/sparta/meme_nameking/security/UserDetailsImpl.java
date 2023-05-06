@@ -11,7 +11,7 @@ import java.util.Collections;
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;
-    private final String username;
+
 
     public UserDetailsImpl(User user) {
         this.user = user;

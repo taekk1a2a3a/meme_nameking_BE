@@ -1,6 +1,11 @@
 package com.sparta.meme_nameking.dto;
 
-public class UserRequestDto {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class LoginRequestDto {
 
     private String username;
     private String password;
