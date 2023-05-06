@@ -9,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -17,19 +19,19 @@ public class PostController {
 
     // 게시글 작성
     @PostMapping("/post/create")
-    public ResponseMsgDto<?> createPost(@RequestPart(required = false, value = "file") MultipartFile multipartFile, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.createPost(multipartFile, postRequestDto, userDetails.getUser());
+    public ResponseMsgDto<?> createPost(@RequestParam(value = "image") MultipartFile image, @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+        return postService.createPost(image, userDetails.getUser());
     }
 
-    // 게시글 수정
-    @PutMapping("/detail/post/update/{post-id}")
-    public ResponseMsgDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.updatePost(id, postRequestDto, userDetails.getUser());
-    }
-
-    // 게시글 삭제
-    @DeleteMapping("/detail/post/delete/{post-id}")
-    public ResponseMsgDto<?> deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return postService.deletePost(id, userDetails.getUser());
-    }
+//    // 게시글 수정
+//    @PutMapping("/detail/post/update/{post-id}")
+//    public ResponseMsgDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        return postService.updatePost(id, postRequestDto, userDetails.getUser());
+//    }
+//
+//    // 게시글 삭제
+//    @DeleteMapping("/detail/post/delete/{post-id}")
+//    public ResponseMsgDto<?> deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+//        return postService.deletePost(id, userDetails.getUser());
+//    }
 }
