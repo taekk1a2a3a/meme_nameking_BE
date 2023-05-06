@@ -1,7 +1,6 @@
 package com.sparta.meme_nameking.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +26,9 @@ public class CommentDdabong {
     @JoinColumn(name = "comment_id")
     @JsonBackReference
     private Comment comment;
+
+    public CommentDdabong(User user, Comment comment) {
+        this.user = user;
+        this.comment = comment;
+    }
 }

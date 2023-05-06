@@ -1,15 +1,12 @@
 package com.sparta.meme_nameking.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sparta.meme_nameking.dto.PostRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,6 +15,7 @@ import java.util.List;
 public class Post extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @Column(length = 500, nullable = false)
@@ -50,9 +48,14 @@ public class Post extends Timestamped {
         this.user = user;
     }
 
+    private int Ddabong;
+
 //    public void update(PostRequestDto postRequestDto) {
 //        this.originImageName = postRequestDto.getOriginImageName();
 //        this.imageName = postRequestDto.getImageName();
 //        this.imagePath = postRequestDto.getImagePath();
 //    }
+
+    public void incDdabong() { ++Ddabong; }
+    public void decDdabong() { --Ddabong; }
 }
