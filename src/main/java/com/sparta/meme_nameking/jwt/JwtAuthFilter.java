@@ -1,6 +1,7 @@
 package com.sparta.meme_nameking.jwt;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -36,6 +38,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             //인증 객체 생성후 SecurityContextHolder에 설정
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            // 토큰 만료 시간 출력
+            long remainingTime = jwtUtil.getRemainingTime(token);
+            log.info("Token remaining time: {} milliseconds", remainingTime);
         }
 
         filterChain.doFilter(request, response);

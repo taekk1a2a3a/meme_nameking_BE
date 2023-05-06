@@ -1,9 +1,8 @@
 package com.sparta.meme_nameking.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +13,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -38,14 +38,26 @@ public class JwtUtil {
         return null;
     }
 
-    // 주어진 JWT 토큰이 유효한지 확인
+    // 주어진 JWT 토큰이 유효한지 확인 (토큰 검증)
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
-            return false;
+        } catch (SecurityException | MalformedJwtException e) {
+            log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT token, 만료된 JWT token 입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.info("Unsupported JWT token, 지원되지 않는 JWT 토큰 입니다.");
+        } catch (IllegalArgumentException e) {
+            log.info("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
         }
+        return false;
+    }
+
+    public long getRemainingTime(String token) {
+        Date expirationDate = getExpirationDateFromToken(token);
+        return expirationDate.getTime() - System.currentTimeMillis();
     }
 
     // JWT 토큰에서 사용자 이름 가져오기
