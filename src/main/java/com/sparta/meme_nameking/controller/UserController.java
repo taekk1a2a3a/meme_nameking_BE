@@ -1,4 +1,3 @@
-
 package com.sparta.meme_nameking.controller;
 
 import com.sparta.meme_nameking.dto.SignupRequestDto;
@@ -6,7 +5,6 @@ import com.sparta.meme_nameking.dto.LoginRequestDto;
 import com.sparta.meme_nameking.dto.ResponseMsgDto;
 import com.sparta.meme_nameking.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,13 +21,13 @@ public class UserController {
 
     //회원가입
     @PostMapping("/signup")
-    public ResponseEntity<ResponseMsgDto> signup(@Valid SignupRequestDto signupRequestDto) {
+    public ResponseMsgDto signup(@Valid SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<ResponseMsgDto> login(LoginRequestDto loginRequestDto, HttpServletResponse response){
+    public ResponseMsgDto login(LoginRequestDto loginRequestDto, HttpServletResponse response){
         return userService.login(loginRequestDto, response);
     }
 }

@@ -1,4 +1,5 @@
 package com.sparta.meme_nameking.service;
+
 import com.sparta.meme_nameking.entity.User;
 import com.sparta.meme_nameking.dto.ResponseMsgDto;
 import com.sparta.meme_nameking.dto.SignupRequestDto;
@@ -10,7 +11,6 @@ import com.sparta.meme_nameking.jwt.JwtUtil;
 import com.sparta.meme_nameking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +21,6 @@ import java.util.Optional;
 import static com.sparta.meme_nameking.exception.ErrorCode.EXIST_NICKNAME;
 import static com.sparta.meme_nameking.exception.ErrorCode.EXIST_USERNAME;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -31,7 +30,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public ResponseEntity<ResponseMsgDto> signup(SignupRequestDto signupRequestDto) {
+    public ResponseMsgDto signup(SignupRequestDto signupRequestDto) {
         String nickname = signupRequestDto.getNickname();
         String username = signupRequestDto.getUsername();
         // 비밀번호 암호화 저장
@@ -51,11 +50,11 @@ public class UserService {
 
         User user = new User(nickname, username, password);
         userRepository.save(user);
-        return ResponseEntity.ok(ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "회원가입 완료", null).getBody());
+        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "회원가입 완료", null);
     }
 
     @Transactional
-    public ResponseEntity<ResponseMsgDto> login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public ResponseMsgDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
@@ -72,6 +71,6 @@ public class UserService {
         String token = jwtUtil.generateToken(String.valueOf(user));
         response.setHeader("Authorization", "Bearer " + token);
 
-        return ResponseEntity.ok(ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "로그인 성공", token).getBody());
+        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "로그인 성공", token);
     }
 }
