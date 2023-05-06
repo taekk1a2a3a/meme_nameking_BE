@@ -17,6 +17,10 @@ public class UserDetailsImpl implements UserDetails {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 모든 사용자에게 기본 사용자 권한 부여

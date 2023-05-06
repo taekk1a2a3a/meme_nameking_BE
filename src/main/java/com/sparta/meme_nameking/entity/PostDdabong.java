@@ -1,7 +1,5 @@
 package com.sparta.meme_nameking.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sparta.meme_nameking.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,15 +8,11 @@ import javax.persistence.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Comment {
+public class PostDdabong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String content;
-
-    // 다대일 관계 설정
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -27,14 +21,13 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
-//    @JsonBackReference
-//    @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
-//    private CommentDdabong commentDdabong;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
-
-    public Comment(CommentRequestDto commentRequestDto, User user, Post post) {
-//        this.content = commentRequestDto.getContent;
+    public PostDdabong(User user, Post post, Comment comment) {
         this.user = user;
         this.post = post;
+        this.comment = comment;
     }
 }
