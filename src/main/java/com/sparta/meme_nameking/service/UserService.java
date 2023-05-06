@@ -58,18 +58,14 @@ public class UserService {
         String username = loginRequestDto.getUsername();
         String password = loginRequestDto.getPassword();
 
-        Optional<User> optionalUser = userRepository.findByUsername(username);
-        if (!optionalUser.isPresent()) {
-            throw new CustomException(ErrorCode.NOT_FOUND_USER);
-        }
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new CustomException(ErrorCode.NOT_FOUND_USER));
 
-        User user = optionalUser.get();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if(!passwordEncoder.matches(password, user.getPassword())){
             throw new CustomException(ErrorCode.INVALID_PASSWORD);
         }
-
-        String token = jwtUtil.generateToken(String.valueOf(user));
-        response.setHeader("Authorization", "Bearer " + token);
+        String token = jwtUtil.createToken(user.getUsername(), user.getRole());
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
 
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "로그인 성공", token);
     }

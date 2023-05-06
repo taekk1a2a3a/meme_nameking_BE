@@ -1,12 +1,14 @@
 package com.sparta.meme_nameking.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.meme_nameking.dto.ResponseMsgDto;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -16,33 +18,44 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
-
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
-        //JWT 토큰 요청 헤더에서 가져오기
-        String token = jwtUtil.getTokenFromRequest(request);
-        //조건문으로 토큰이 존재하고 유효한 경우
-        if (token != null && jwtUtil.validateToken(token)) {
-            //토큰에서 사용자 이름 추출
-            String username = jwtUtil.getUsernameFromToken(token);
-            // UserDeatilsService 사용하여 UserDetails 객체 불러옴
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            //인증 객체 생성후 SecurityContextHolder에 설정
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            // 토큰 만료 시간 출력
-            long remainingTime = jwtUtil.getRemainingTime(token);
-            log.info("Token remaining time: {} milliseconds", remainingTime);
-        }
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        filterChain.doFilter(request, response);
+        String token = jwtUtil.resolveToken(request);
+
+        if(token != null) {
+            if(!jwtUtil.validateToken(token)){
+                jwtExceptionHandler(response, "Token Error", HttpStatus.UNAUTHORIZED.value());
+                return;
+            }
+            Claims info = jwtUtil.getUserInfoFromToken(token);
+            setAuthentication(info.getSubject());
+        }
+        filterChain.doFilter(request,response);
     }
+
+    public void setAuthentication(String username) {
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        Authentication authentication = jwtUtil.createAuthentication(username);
+        context.setAuthentication(authentication);
+
+        SecurityContextHolder.setContext(context);
+    }
+
+    public void jwtExceptionHandler(HttpServletResponse response, String msg, int statusCode) {
+        response.setStatus(statusCode);
+        response.setContentType("application/json");
+        try {
+            String json = new ObjectMapper().writeValueAsString(ResponseMsgDto.setFail(statusCode, msg));
+            response.getWriter().write(json);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
 }
