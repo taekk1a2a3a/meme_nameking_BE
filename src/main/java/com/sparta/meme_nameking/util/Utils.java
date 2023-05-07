@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,9 +58,12 @@ public class Utils {
     }
 
     // 짤명왕(따봉킹) 찾기
-    public String getDdabongKing(){
-        Long userKingId = querydslRepository.getDabongKingUserId();
-        String ddabongKing = userRepository.findById(userKingId).get().getNickname();
+    public String getDdabongKing() {
+        Optional<Long> userKingIdOptional = querydslRepository.getDabongKingUserId();
+        String ddabongKing = userKingIdOptional.flatMap(userRepository::findById)
+                .map(User::getNickname)
+                .orElse(null);
         return ddabongKing;
     }
+
 }
