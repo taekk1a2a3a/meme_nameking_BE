@@ -25,14 +25,20 @@ public class PageController {
         return pageService.mainPageLoad();
     }
 
+    // 전체 페이지 따봉킹 조회
+    @Operation(summary = "전체 페이지 상단 조회 API", description = "따봉킹 조회")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
+    @GetMapping("/posts/ddabongking")
+    public ResponseMsgDto ddabongKing(){
+        return pageService.ddabongKing();
+    }
 
     // 전체 페이지 PostList 조회
-    @Operation(summary = "전체 페이지 조회 API", description = "전체 페이지 조회")
+    @Operation(summary = "전체 페이지 하단 조회 API", description = "PostList 조회")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
     @GetMapping("/posts")
     public ResponseMsgDto PostList(){
         return pageService.PostList();
-
     }
     
       // 전체 페이지
@@ -40,8 +46,8 @@ public class PageController {
     public ResponseMsgDto ddabongKing(){
 
         return pageService.ddabongKing();
-    }    
-    
+    }
+
     //상세 페이지 상단 조회
     @Operation(summary = "상세 페이지 상단 조회 API", description = "상세 페이지 상단 조회")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})

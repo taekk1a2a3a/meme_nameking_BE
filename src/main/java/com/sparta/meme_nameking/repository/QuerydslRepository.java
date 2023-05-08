@@ -38,7 +38,7 @@ public class QuerydslRepository {
         Comment bestComment = queryFactory
                 .select(qComment)
                 .from(qComment)
-                .where(qComment.post.eq(post))
+                .where(qComment.post.eq(post).and(qComment.Ddabong.gt(0)))
                 .orderBy(qComment.Ddabong.desc())
                 .limit(1)
                 .fetchOne();
