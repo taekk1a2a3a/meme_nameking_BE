@@ -25,7 +25,7 @@ public class PageService {
     public ResponseMsgDto mainPageLoad(){
         List<MainPageResponseDto> mainPageResponseDtos = postRepository.findAll().stream()
                 .sorted(Comparator.comparingInt(Post::getDdabong).reversed())
-                .limit(5)
+                .limit(6)
                 .map(post -> new MainPageResponseDto(post, utils.getBestComment(post)))
                 .collect(Collectors.toList());
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "메인페이지 조회 성공", mainPageResponseDtos);
