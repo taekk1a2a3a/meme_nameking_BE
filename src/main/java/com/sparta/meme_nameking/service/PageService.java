@@ -1,9 +1,6 @@
 package com.sparta.meme_nameking.service;
 
-import com.sparta.meme_nameking.dto.AllPageResponseDto;
-import com.sparta.meme_nameking.dto.DetailPageBottomResponseDto;
-import com.sparta.meme_nameking.dto.DetailPageTopResponseDto;
-import com.sparta.meme_nameking.dto.ResponseMsgDto;
+import com.sparta.meme_nameking.dto.*;
 import com.sparta.meme_nameking.entity.Comment;
 import com.sparta.meme_nameking.entity.Post;
 import com.sparta.meme_nameking.repository.PostRepository;
@@ -23,6 +20,18 @@ public class PageService {
 
     private final Utils utils;
     private final PostRepository postRepository;
+
+    //메인페이지 조회
+    public ResponseMsgDto mainPageLoad(){
+        List<MainPageResponseDto> mainPageResponseDtos = postRepository.findAll().stream()
+                .sorted(Comparator.comparingInt(Post::getDdabong).reversed())
+                .limit(5)
+                .map(post -> new MainPageResponseDto(post, utils.getBestComment(post)))
+                .collect(Collectors.toList());
+        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "메인페이지 조회 성공", mainPageResponseDtos);
+    }
+
+
 
     // 전체 페이지 짤명왕 조회
     public ResponseMsgDto ddabongKing(){
