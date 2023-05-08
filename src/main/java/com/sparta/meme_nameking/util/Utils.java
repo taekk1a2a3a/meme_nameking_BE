@@ -50,20 +50,14 @@ public class Utils {
     }
 
     // 베스트 댓글 찾기
-    public String getBestComment(Post post){
-        String bestComment = commentRepository.findAllByPost(post)
-                .stream()
-                .max(Comparator.comparing(Comment::getDdabong)).get().getContent();
-        return bestComment;
+    public String getBestComment(Post post) {
+        Optional<Comment> optBestComment = querydslRepository.findBestCommentByPost(post);
+        return optBestComment.map(Comment::getContent).orElse(null);
     }
 
     // 짤명왕(따봉킹) 찾기
     public String getDdabongKing() {
-        Optional<Long> userKingIdOptional = querydslRepository.getDabongKingUserId();
-        String ddabongKing = userKingIdOptional.flatMap(userRepository::findById)
-                .map(User::getNickname)
-                .orElse(null);
-        return ddabongKing;
+        Optional<User> optDabongKingUser = querydslRepository.findDayKingUser();
+        return optDabongKingUser.map(User::getNickname).orElse(null);
     }
-
 }
