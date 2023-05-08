@@ -2,6 +2,7 @@ package com.sparta.meme_nameking.dto;
 
 import com.sparta.meme_nameking.entity.Post;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -10,12 +11,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PostResponseDto {
     private Long id;
-    private String imageName;
+    private String imageUrl;
     private LocalDateTime createAt;
 
+    @Builder
     public PostResponseDto(Post post) {
         this.id = post.getId();
-        this.imageName = post.getImageName();
+        this.imageUrl = post.getImageUrl();
         this.createAt = post.getCreatedAt();
     }
 
