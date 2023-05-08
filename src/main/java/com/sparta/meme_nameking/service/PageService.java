@@ -1,9 +1,6 @@
 package com.sparta.meme_nameking.service;
 
-import com.sparta.meme_nameking.dto.AllPageResponseDto;
-import com.sparta.meme_nameking.dto.DetailPageBottomResponseDto;
-import com.sparta.meme_nameking.dto.DetailPageTopResponseDto;
-import com.sparta.meme_nameking.dto.ResponseMsgDto;
+import com.sparta.meme_nameking.dto.*;
 import com.sparta.meme_nameking.entity.Comment;
 import com.sparta.meme_nameking.entity.Post;
 import com.sparta.meme_nameking.repository.PostRepository;

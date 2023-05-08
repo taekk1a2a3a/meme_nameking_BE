@@ -40,13 +40,6 @@ public class PageController {
     public ResponseMsgDto PostList(){
         return pageService.PostList();
     }
-    
-      // 전체 페이지
-    @GetMapping("/posts/ddabongking")
-    public ResponseMsgDto ddabongKing(){
-
-        return pageService.ddabongKing();
-    }
 
     //상세 페이지 상단 조회
     @Operation(summary = "상세 페이지 상단 조회 API", description = "상세 페이지 상단 조회")
