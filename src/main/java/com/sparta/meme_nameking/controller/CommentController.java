@@ -21,22 +21,22 @@ public class CommentController {
 
     @Operation(summary = "댓글 작성 API", description = "댓글 작성")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "댓글 작성 완료")})
-    @PostMapping("/{post-id}")
-    public ResponseMsgDto createComment(@PathVariable(name = "post-id") Long id, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        return commentService.createComment(id,requestDto, userDetails.getUser());
+    @PostMapping("/")
+    public ResponseMsgDto createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        return commentService.createComment(requestDto, userDetails.getUser());
     }
 
     @Operation(summary = "댓글 수정 API", description = "댓글 수정")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "댓글 수정 완료")})
-    @PutMapping("/{comment-id}")
-    public ResponseMsgDto updateComment(@PathVariable(name = "comment-id") Long id, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    @PutMapping("/{commentId}")
+    public ResponseMsgDto updateComment(@PathVariable(name = "commentId") Long id, @RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return commentService.updateComment(id, requestDto, userDetails.getUser());
     }
 
     @Operation(summary = "댓글 삭제 API", description = "댓글 삭제")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "댓글 삭제 완료")})
-    @DeleteMapping("/{comment-id}")
-    public ResponseMsgDto deleteComment(@PathVariable(name = "comment-id") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    @DeleteMapping("/{commentId}")
+    public ResponseMsgDto deleteComment(@PathVariable(name = "commentId") Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return commentService.deleteComment(id, userDetails.getUser());
     }
 }
