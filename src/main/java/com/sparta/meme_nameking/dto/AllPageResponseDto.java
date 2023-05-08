@@ -10,6 +10,9 @@ import javax.persistence.Column;
 @NoArgsConstructor
 public class AllPageResponseDto {
 
+    @Column(nullable = false)
+    private Long postId;
+
     @Column(nullable = true)
     private String bestComment;
 
@@ -21,6 +24,7 @@ public class AllPageResponseDto {
     private int postDdabong;
 
     public AllPageResponseDto(Post post, String bestComment){
+        this.postId = post.getId();
         this.bestComment = bestComment;
         this.imageName = post.getImageName();
         this.postDdabong = post.getDdabong();

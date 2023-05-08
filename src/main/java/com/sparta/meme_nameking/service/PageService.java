@@ -40,6 +40,6 @@ public class PageService {
             allPageResponseDtoList.add(allPage);
         }
 
-        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "테스트", allPageResponseDtoList);
+        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "전체 페이지 PostList", allPageResponseDtoList);
     }
 }
