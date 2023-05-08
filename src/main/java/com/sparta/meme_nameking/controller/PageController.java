@@ -18,13 +18,22 @@ public class PageController {
 
     private final PageService pageService;
 
-    // 전체 페이지 조회
+
+    // 전체 페이지 PostList 조회
     @Operation(summary = "전체 페이지 조회 API", description = "전체 페이지 조회")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
     @GetMapping("/posts")
-    public ResponseMsgDto allPageLoad(){
-        return pageService.allPageLoad();
+    public ResponseMsgDto PostList(){
+        return pageService.PostList();
+
     }
+    
+      // 전체 페이지
+    @GetMapping("/posts/ddabongking")
+    public ResponseMsgDto ddabongKing(){
+        return pageService.ddabongKing();
+    }    
+    
     //상세 페이지 상단 조회
     @Operation(summary = "상세 페이지 상단 조회 API", description = "상세 페이지 상단 조회")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
@@ -42,5 +51,6 @@ public class PageController {
     }
 
 
+  
 
 }
