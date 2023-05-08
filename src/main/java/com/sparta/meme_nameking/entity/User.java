@@ -34,21 +34,21 @@ public class User {
     @Column(nullable = false)
     private UserRoleEnum role;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-//    @JsonManagedReference
-//    private List<Post> postList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-//    @JsonManagedReference
-//    private List<Comment> commentList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-//    @JsonManagedReference
-//    private List<PostDdabong> postDdabongList = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-//    @JsonManagedReference
-//    private List<CommentDdabong> commentDdabongList = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<Comment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<PostDdabong> postDdabongList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    private List<CommentDdabong> commentDdabongList = new ArrayList<>();
 
     public User(String nickname, String username, String password) {
         this.nickname = nickname;
