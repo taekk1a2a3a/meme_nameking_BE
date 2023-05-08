@@ -1,5 +1,9 @@
 package com.sparta.meme_nameking.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sparta.meme_nameking.dto.PostResponseDto;
 import com.sparta.meme_nameking.dto.ResponseMsgDto;
 import com.sparta.meme_nameking.entity.Post;
@@ -7,69 +11,68 @@ import com.sparta.meme_nameking.entity.User;
 import com.sparta.meme_nameking.repository.PostRepository;
 import com.sparta.meme_nameking.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoField;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
 
+    private final AmazonS3Client amazonS3Client;
     private final PostRepository postRepository;
     private final Utils utils;
+    private static final String S3_BUCKET_PREFIX = "S3";
 
-    @Value("${file.upload.location}")
-    private String upLoadLocation;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucketName;
 
     Post post;
 
     // 게시글 작성
     @Transactional
     public ResponseMsgDto<?> createPost(MultipartFile image, User user) throws IOException {
-        // 폴더 생성과 파일명 새로 부여를 위한 현재 시간 알아내기
+        // 파일명 새로 부여를 위한 현재 시간 알아내기
         LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        int day = now.getDayOfMonth();
         int hour = now.getHour();
         int minute = now.getMinute();
         int second = now.getSecond();
         int millis = now.get(ChronoField.MILLI_OF_SECOND);
 
-        // 파일이 저장될 절대 경로   
-
-        String absolutePath = new File(upLoadLocation).getAbsolutePath() + "/";
+        String imageUrl = null;
 
         // 새로 부여한 이미지명
         String newFileName = "image" + hour + minute + second + millis;
-        // 정규식 이용하여 확장자만 추출
         String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1");
-        // 저장될 폴더 경로
-        String path = "images/test/" + year + "_" + month + "_" + day;
+        String imageName =S3_BUCKET_PREFIX + newFileName + fileExtension;
 
-        if(!image.isEmpty()) {
-            File file = new File(absolutePath + path);
-            if(!file.exists()){
-                // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
-                file.mkdirs();
-            }
+        // 메타데이터 설정
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(image.getContentType());
+        objectMetadata.setContentLength(image.getSize());
 
-            file = new File(absolutePath + path + "/" + newFileName + fileExtension);
-            image.transferTo(file);
+        InputStream inputStream = image.getInputStream();
 
-            String originImageName = image.getOriginalFilename();
-            String imagePath = path;
-            String imageName = newFileName + fileExtension;
+        amazonS3Client.putObject(new PutObjectRequest(bucketName, imageName, inputStream, objectMetadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+        imageUrl = amazonS3Client.getUrl(bucketName, imageName).toString();
 
-            post = postRepository.save(new Post(originImageName, imagePath, imageName, user));
-        }
+        post = post.builder()
+                .imageUrl(imageUrl)
+                .user(user)
+                .build();
+
+        postRepository.save(post);
+
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "게시글 작성 완료", new PostResponseDto(post));
     }
 
@@ -81,39 +84,31 @@ public class PostService {
 
         // 폴더 생성과 파일명 새로 부여를 위한 현재 시간 알아내기
         LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        int day = now.getDayOfMonth();
         int hour = now.getHour();
         int minute = now.getMinute();
         int second = now.getSecond();
         int millis = now.get(ChronoField.MILLI_OF_SECOND);
 
-        // 파일이 저장될 절대 경로
-        String absolutePath = new File(upLoadLocation).getAbsolutePath() + "/";
+        String imageUrl;
+
         // 새로 부여한 이미지명
         String newFileName = "image" + hour + minute + second + millis;
-        // 정규식 이용하여 확장자만 추출
         String fileExtension = '.' + image.getOriginalFilename().replaceAll("^.*\\.(.*)$", "$1");
-        // 저장될 폴더 경로
-        String path = "images/test/" + year + "_" + month + "_" + day;
+        String imageName =S3_BUCKET_PREFIX + newFileName + fileExtension;
 
-        if(!image.isEmpty()) {
-            File file = new File(absolutePath + path);
-            if (!file.exists()) {
-                // mkdir()과 다르게 상위 폴더가 없을 때 상위폴더까지 생성
-                file.mkdirs();
-            }
+        // 메타데이터 설정
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentType(image.getContentType());
+        objectMetadata.setContentLength(image.getSize());
 
-            file = new File(absolutePath + path + "/" + newFileName + fileExtension);
-            image.transferTo(file);
+        InputStream inputStream = image.getInputStream();
 
-            String originImageName = image.getOriginalFilename();
-            String imagePath = path;
-            String imageName = newFileName + fileExtension;
+        amazonS3Client.putObject(new PutObjectRequest(bucketName, imageName, inputStream, objectMetadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+        imageUrl = amazonS3Client.getUrl(bucketName, imageName).toString();
 
-            post.update(originImageName, imagePath, imageName);
-        }
+        post.update(imageUrl);
+
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "게시글 수정 완료", new PostResponseDto(post));
     }
 

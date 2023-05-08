@@ -20,7 +20,7 @@ public class MainPageResponseDto {
 
     // 게시글 등록 완성되면 수정하면 될 부분
     @Column(nullable = true)
-    private String imageName;
+    private String imageUrl;
 
     @Column(nullable = true)
     private int postDdabong;
@@ -28,7 +28,7 @@ public class MainPageResponseDto {
     public MainPageResponseDto(Post post, String bestComment){
         this.postId = post.getId();
         this.bestComment = bestComment;
-        this.imageName = post.getImageName();
+        this.imageUrl = post.getImageUrl();
         this.postDdabong = post.getDdabong();
     }
 }
