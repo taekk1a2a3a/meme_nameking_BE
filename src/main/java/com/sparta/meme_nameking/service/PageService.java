@@ -6,7 +6,6 @@ import com.sparta.meme_nameking.dto.DetailPageTopResponseDto;
 import com.sparta.meme_nameking.dto.ResponseMsgDto;
 import com.sparta.meme_nameking.entity.Comment;
 import com.sparta.meme_nameking.entity.Post;
-import com.sparta.meme_nameking.entity.User;
 import com.sparta.meme_nameking.repository.PostRepository;
 import com.sparta.meme_nameking.util.Utils;
 import lombok.RequiredArgsConstructor;
@@ -70,18 +69,18 @@ public class PageService {
                 .limit(3)
                 .collect(Collectors.toList());
 
-        // 베스트 댓글을 제외한 나머지 댓글 정렬 (최신순)
-        List<Comment> otherComments = post.getCommentList().stream()
-                .filter(comment -> !bestComments.contains(comment))
+        // 전체 댓글 정렬 (최신순)
+        List<Comment> allComments = post.getCommentList().stream()
                 .sorted(Comparator.comparing(Comment::getCreatedAt).reversed())
                 .collect(Collectors.toList());
 
         // 하단 응답 DTO 생성
-        DetailPageBottomResponseDto detailPageBottomResponseDto = new DetailPageBottomResponseDto(bestComments, otherComments);
+        DetailPageBottomResponseDto detailPageBottomResponseDto = new DetailPageBottomResponseDto(bestComments, allComments);
 
         // 상세 페이지 하단 조회 성공 메시지와 함께 응답
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "상세 페이지 하단 조회 성공", detailPageBottomResponseDto);
     }
+
 
 
 
