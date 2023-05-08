@@ -21,13 +21,7 @@ public class Post extends Timestamped {
     private Long id;
 
     @Column(length = 500, nullable = false)
-    private String originImageName;
-
-    @Column(length = 500, nullable = false)
-    private String imageName;
-
-    @Column(length = 1000, nullable = false)
-    private String imagePath;
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -43,19 +37,15 @@ public class Post extends Timestamped {
     private List<PostDdabong> postDdabongList = new ArrayList<>();
 
     @Builder
-    public Post(String originImageName, String imagePath, String imageName, User user) {
-        this.originImageName = originImageName;
-        this.imageName = imageName;
-        this.imagePath = imagePath;
+    public Post(String imageUrl, User user) {
+        this.imageUrl = imageUrl;
         this.user = user;
     }
 
     private int Ddabong;
 
-    public void update(String getOriginImageName, String getImagePath, String getImageName) {
-        this.originImageName = getOriginImageName;
-        this.imageName = getImageName;
-        this.imagePath = getImagePath;
+    public void update(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public void incDdabong() { ++Ddabong; }
