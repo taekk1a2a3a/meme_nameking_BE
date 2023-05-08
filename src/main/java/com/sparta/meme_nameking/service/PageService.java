@@ -26,7 +26,7 @@ public class PageService {
     private final PostRepository postRepository;
 
     // 전체 페이지 조회
-    public ResponseMsgDto allPageLoad(User user) {
+    public ResponseMsgDto allPageLoad() {
         // 짤명왕 - TOP
         String ddabongKing = utils.getDdabongKing();
         // List ( Best 댓글, Post, PostDdabong)
@@ -42,8 +42,25 @@ public class PageService {
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "테스트", allPageResponseDto);
     }
 
-    // 상세 페이지 조회
-    public ResponseMsgDto detailPageLoad(Long postId, User user) {
+    // 상세 페이지 상단 조회
+    public ResponseMsgDto detailPageTopLoad(Long postId) {
+        // 게시물 찾기
+        Post post = utils.findPostById(postId);
+
+        // 베스트 댓글 1등 찾기 (따봉 순)
+        Comment bestComment = post.getCommentList().stream()
+                .max(Comparator.comparing(Comment::getDdabong))
+                .orElse(null);
+
+        // 상단 응답 DTO 생성
+        DetailPageTopResponseDto detailPageTopResponseDto = new DetailPageTopResponseDto(post, bestComment.getContent());
+
+        // 상세 페이지 상단 조회 성공 메시지와 함께 응답
+        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "상세 페이지 상단 조회 성공", detailPageTopResponseDto);
+    }
+
+    // 상세 페이지 하단 조회
+    public ResponseMsgDto detailPageBottomLoad(Long postId) {
         // 게시물 찾기
         Post post = utils.findPostById(postId);
 
@@ -59,15 +76,13 @@ public class PageService {
                 .sorted(Comparator.comparing(Comment::getCreatedAt).reversed())
                 .collect(Collectors.toList());
 
-        // 상단 응답 DTO 생성
-        DetailPageTopResponseDto detailPageTopResponseDto = new DetailPageTopResponseDto(post, bestComments.get(0).getContent());
-
         // 하단 응답 DTO 생성
         DetailPageBottomResponseDto detailPageBottomResponseDto = new DetailPageBottomResponseDto(bestComments, otherComments);
 
-        // 상세 페이지 조회 성공 메시지와 함께 응답
-        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "상세 페이지 조회 성공", detailPageTopResponseDto, detailPageBottomResponseDto);
+        // 상세 페이지 하단 조회 성공 메시지와 함께 응답
+        return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "상세 페이지 하단 조회 성공", detailPageBottomResponseDto);
     }
+
 
 
 
