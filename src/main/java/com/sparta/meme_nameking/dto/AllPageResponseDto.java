@@ -23,6 +23,7 @@ public class AllPageResponseDto {
         @Column(nullable = true)
         private String bestComment;
 
+        // 게시글 등록 완성되면 수정하면 될 부분
         @Column(nullable = true)
         private String imageName;
 

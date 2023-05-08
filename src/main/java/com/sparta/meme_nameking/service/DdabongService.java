@@ -2,6 +2,7 @@ package com.sparta.meme_nameking.service;
 
 import com.sparta.meme_nameking.dto.ResponseMsgDto;
 import com.sparta.meme_nameking.entity.*;
+import com.sparta.meme_nameking.exception.CustomException;
 import com.sparta.meme_nameking.repository.CommentDdabongRepository;
 import com.sparta.meme_nameking.repository.PostDdabongRepository;
 import com.sparta.meme_nameking.util.Utils;
@@ -47,7 +48,7 @@ public class DdabongService {
             comment.incDdabong();
             return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "댓글 따봉 !", null);
         } else {
-            postDdabongRepository.deleteById(optCommentDdabong.get().getId());
+            commentDdabongRepository.deleteById(optCommentDdabong.get().getId());
             comment.decDdabong();
             return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "댓글 따봉 취소", null);
         }
