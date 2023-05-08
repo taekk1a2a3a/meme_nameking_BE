@@ -68,9 +68,10 @@ public class PageService {
         // 게시물 찾기
         Post post = utils.findPostById(postId);
 
-        // 베스트 댓글 3개 추출 (따봉 순)
+        // 베스트 댓글 3개 추출 (따봉 순, 날짜 순)
         List<Comment> bestComments = post.getCommentList().stream()
-                .sorted(Comparator.comparing(Comment::getDdabong).reversed())
+                .sorted(Comparator.comparing(Comment::getDdabong).reversed()
+                        .thenComparing(Comment::getCreatedAt))
                 .limit(3)
                 .collect(Collectors.toList());
 
