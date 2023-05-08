@@ -8,12 +8,10 @@ import com.sparta.meme_nameking.exception.ErrorCode;
 import com.sparta.meme_nameking.repository.CommentRepository;
 import com.sparta.meme_nameking.repository.PostRepository;
 import com.sparta.meme_nameking.repository.QuerydslRepository;
-import com.sparta.meme_nameking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.Optional;
 
 @Service
@@ -24,7 +22,6 @@ public class Utils {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final QuerydslRepository querydslRepository;
-    private final UserRepository userRepository;
 
     // 게시글 찾기
     public Post findPostById(Long id){
@@ -52,7 +49,7 @@ public class Utils {
     // 베스트 댓글 찾기
     public String getBestComment(Post post) {
         Optional<Comment> optBestComment = querydslRepository.findBestCommentByPost(post);
-        return optBestComment.map(Comment::getContent).orElse(null);
+        return optBestComment.map(Comment::getContent).orElse("아직 베스트 댓글이 없습니다.");
     }
 
     // 짤명왕(따봉킹) 찾기
