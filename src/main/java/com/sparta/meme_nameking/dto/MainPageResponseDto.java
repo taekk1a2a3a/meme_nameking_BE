@@ -1,17 +1,16 @@
 package com.sparta.meme_nameking.dto;
 
 import com.sparta.meme_nameking.entity.Post;
-import lombok.AllArgsConstructor;
+import com.sun.tools.javac.Main;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
-import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class AllPageResponseDto {
+public class MainPageResponseDto {
 
     @Column(nullable = false)
     private Long postId;
@@ -19,13 +18,14 @@ public class AllPageResponseDto {
     @Column(nullable = true)
     private String bestComment;
 
-        @Column(nullable = true)
-        private String imageUrl;
+    // 게시글 등록 완성되면 수정하면 될 부분
+    @Column(nullable = true)
+    private String imageUrl;
 
     @Column(nullable = true)
     private int postDdabong;
 
-    public AllPageResponseDto(Post post, String bestComment){
+    public MainPageResponseDto(Post post, String bestComment){
         this.postId = post.getId();
         this.bestComment = bestComment;
         this.imageUrl = post.getImageUrl();

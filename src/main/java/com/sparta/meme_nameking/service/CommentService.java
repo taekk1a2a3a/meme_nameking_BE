@@ -21,8 +21,8 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final Utils utils;
 
-    public ResponseMsgDto createComment(Long id, CommentRequestDto requestDto, User user) {
-        Post post = utils.findPostById(id);
+    public ResponseMsgDto createComment(CommentRequestDto requestDto, User user) {
+        Post post = utils.findPostById(requestDto.getPostId());
         Comment comment = new Comment(requestDto, user, post);
         commentRepository.save(comment);
         CommentResponseDto commentResponseDto = new CommentResponseDto(comment);

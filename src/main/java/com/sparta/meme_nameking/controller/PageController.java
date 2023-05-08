@@ -17,14 +17,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class PageController {
 
     private final PageService pageService;
+    //메인페이지 조회
+    @Operation(summary = "메인 페이지 조회 API", description = "메인 페이지 조회")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
+    @GetMapping("/")
+    public ResponseMsgDto mainPageLoad(){
+        return pageService.mainPageLoad();
+    }
 
-    // 전체 페이지 조회
-    @Operation(summary = "전체 페이지 조회 API", description = "전체 페이지 조회")
+    // 전체 페이지 따봉킹 조회
+    @Operation(summary = "전체 페이지 상단 조회 API", description = "따봉킹 조회")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
+    @GetMapping("/posts/ddabongking")
+    public ResponseMsgDto ddabongKing(){
+        return pageService.ddabongKing();
+    }
+
+    // 전체 페이지 PostList 조회
+    @Operation(summary = "전체 페이지 하단 조회 API", description = "PostList 조회")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
     @GetMapping("/posts")
-    public ResponseMsgDto allPageLoad(){
-        return pageService.allPageLoad();
+    public ResponseMsgDto PostList(){
+        return pageService.PostList();
     }
+
     //상세 페이지 상단 조회
     @Operation(summary = "상세 페이지 상단 조회 API", description = "상세 페이지 상단 조회")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "조회 성공")})
@@ -42,5 +58,6 @@ public class PageController {
     }
 
 
+  
 
 }
