@@ -24,21 +24,14 @@ public class PageService {
     private final Utils utils;
     private final PostRepository postRepository;
 
-
-
     // 전체 페이지 짤명왕 조회
     public ResponseMsgDto ddabongKing(){
-
-
         String ddabongKing = utils.getDdabongKing();
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "현재 따봉킹", ddabongKing);
-
     }
     // 전체 페이지 조회
     public ResponseMsgDto PostList(){
-
         // List ( Best 댓글, Post, PostDdabong)
-
         List<AllPageResponseDto> allPageResponseDtoList = new ArrayList<>();
 
         // 현재 Post 모두 가져오기
@@ -47,6 +40,7 @@ public class PageService {
             AllPageResponseDto allPage = new AllPageResponseDto(post, bestComment);
             allPageResponseDtoList.add(allPage);
         }
+        allPageResponseDtoList.sort(Comparator.comparing(AllPageResponseDto::getPostId).reversed());
 
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "전체 페이지 PostList", allPageResponseDtoList);
 
