@@ -12,6 +12,7 @@ import java.util.*;
 @Entity
 @NoArgsConstructor
 public class Comment extends Timestamped{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
@@ -36,7 +37,6 @@ public class Comment extends Timestamped{
     private List<CommentDdabong> commentDdabongList = new ArrayList<>();
 
     private int Ddabong;
-
 
     public Comment(CommentRequestDto commentRequestDto, User user, Post post) {
         this.content = commentRequestDto.getContent();

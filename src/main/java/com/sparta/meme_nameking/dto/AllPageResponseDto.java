@@ -19,8 +19,8 @@ public class AllPageResponseDto {
     @Column(nullable = true)
     private String bestComment;
 
-        @Column(nullable = true)
-        private String imageUrl;
+    @Column(nullable = true)
+    private String imageUrl;
 
     @Column(nullable = true)
     private int postDdabong;

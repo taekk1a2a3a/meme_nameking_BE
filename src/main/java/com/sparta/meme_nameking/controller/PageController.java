@@ -56,8 +56,4 @@ public class PageController {
     public ResponseMsgDto detailPageBottomLoad(@PathVariable Long postId) {
         return pageService.detailPageBottomLoad(postId);
     }
-
-
-  
-
 }

@@ -53,7 +53,6 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-
     public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
 
