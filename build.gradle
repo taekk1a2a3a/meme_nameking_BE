@@ -64,9 +64,11 @@ dependencies {
     // swagger
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.8'
 
-
     // 의존성 추가
     implementation group: 'org.springframework.boot', name: 'spring-boot-maven-plugin', version: '2.7.11'
+
+    //CORS
+    implementation("org.mariadb.jdbc:mariadb-java-client:2.1.2")
 
 }
 // QueryDSL
