@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROOT_PATH="/home/ubuntu/app/zip"
+ROOT_PATH="/home/ubuntu/app/zip/build/libs/"
 APPLICATION_JAR="$ROOT_PATH/Meme_NameKing-0.0.1-SNAPSHOT.jar"
 STOP_LOG="$ROOT_PATH/stop.log"
 SERVICE_PID=$(pgrep -f $APPLICATION_JAR) # 실행 중인 Spring Boot 애플리케이션의 PID
