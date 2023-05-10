@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Post extends Timestamped {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")

@@ -31,8 +31,6 @@ public class PageService {
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "메인페이지 조회 성공", mainPageResponseDtos);
     }
 
-
-
     // 전체 페이지 짤명왕 조회
     public ResponseMsgDto ddabongKing(){
         String ddabongKing = utils.getDdabongKing();
@@ -95,11 +93,4 @@ public class PageService {
         // 상세 페이지 하단 조회 성공 메시지와 함께 응답
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "상세 페이지 하단 조회 성공", detailPageBottomResponseDto);
     }
-
-
-
-
-
-
-
 }

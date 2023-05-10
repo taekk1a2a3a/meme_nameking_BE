@@ -120,5 +120,4 @@ public class PostService {
         postRepository.deleteById(id);
         return ResponseMsgDto.setSuccess(HttpStatus.OK.value(), "게시글 삭제 완료", id);
     }
-
 }
