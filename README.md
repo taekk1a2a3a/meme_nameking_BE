@@ -100,3 +100,8 @@ BackEnd : 이태경, 임슬기, 김근보, 이세훈
   #### - 댓글 삭제 : 클릭 시 댓글 삭제
   #### - 댓글 ♥(좋아요) 버튼 : 클릭 시 해당 댓글 좋아요(한 번더 클릭 시 좋아요 취소)
 ![](https://velog.velcdn.com/images/rmsqh4617/post/ec7d8a61-4791-441f-8de5-2074f5431596/image.png)
+
+
+### ERD 설계
+
+![image](https://github.com/CaptainGombo/meme_nameking_BE/assets/125139072/85718091-3d4c-4879-a747-1f5649912789)
