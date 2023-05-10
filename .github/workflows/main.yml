@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/meme_nameking_BE@main
+    - uses: CaptianGombo/meme_nameking_BE/.github/workflows/main.yml@main
+
     
     - name: Set up JDK 17
       uses: actions/setup-java@v2
