@@ -24,7 +24,7 @@ public class DdabongController {
     @Operation(summary = "게시글 따봉 API", description = "게시글 따봉")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "게시글 따봉 완료")})
     @PostMapping("/posts/{postId}/ddabongs")
-    public ResponseMsgDto postDdabongToFull(@PathVariable(name = "post-id")Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseMsgDto postDdabongToFull(@PathVariable(name = "postId")Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return ddabongService.postDdabong(id, userDetails.getUser());
     }
 
@@ -32,7 +32,7 @@ public class DdabongController {
     @Operation(summary = "댓글 따봉 API", description = "댓글 따봉")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "댓글 따봉 완료")})
     @PostMapping("/comments/{commentId}/ddabongs")
-    public ResponseMsgDto commentDdabongToDetail(@PathVariable(name = "comment-id")Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseMsgDto commentDdabongToDetail(@PathVariable(name = "commentId")Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return ddabongService.commentDdabong(id, userDetails.getUser());
     }
 
