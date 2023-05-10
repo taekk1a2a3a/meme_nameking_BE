@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PROJECT_ROOT="/home/ubuntu/app/zip/build/libs/"
-JAR_FILE="$PROJECT_ROOT/Meme_NameKing-0.0.1-SNAPSHOT.jar"
+PROJECT_ROOT="/home/ubuntu/app/"
+JAR_FILE="$PROJECT_ROOT/build/libs/Meme_NameKing-0.0.1-SNAPSHOT.jar"
 
 APP_LOG="$PROJECT_ROOT/application.log"
 ERROR_LOG="$PROJECT_ROOT/error.log"
