@@ -9,8 +9,8 @@ files:
 permissions: # CodeDeploy에서 EC2 서버로 넘겨 준 파일들은 모두 ec2-user 권한을 가진다
   - object: /
     pattern: "**"
-    owner: TKLEE
-    group: ME
+    owner: ubuntu
+    group: ubuntu
 
 hooks: # CodeDeploy 배포 단계에서 실행할 명령어
   AfterInstall:
