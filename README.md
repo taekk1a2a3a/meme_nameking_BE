@@ -1,6 +1,10 @@
 # meme_nameking_BE
 ## Mini Project : 내가 짤명왕 
 
+![KakaoTalk_20230511_200359137](https://github.com/CaptainGombo/meme_nameking_BE/assets/125139072/1c6f1037-0417-4657-90d6-4ca8de774004)
+
+
+
 ### 노션 주소 : https://www.notion.so/S-A-2820b886259b46b3a6a926467002a4f1
 
 ### 13조 구성원
